@@ -42,7 +42,6 @@ function draw() {
     grafix.worldProps.ctx.fillText(String.fromCodePoint(0x26F2),         300, 100);
     grafix.worldProps.ctx.fillText(String.fromCodePoint(0x26F2, 0xFE0F), 300, 150);
 
-
     game.requestID = requestAnimationFrame(draw);
 }
 
