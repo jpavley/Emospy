@@ -26,21 +26,19 @@ function draw() {
     grafix.worldProps.ctx.beginPath();
     grafix.worldProps.ctx.font = '25px Arial';
 
-    //                                                                    x    y
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x2708),          100, 100);
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x2708, 0xFE0F),  100, 150);
+    const margin = 5;
+    const cols = (grafix.worldProps.canvas.width - (margin * 4)) / 25;
+    const rows = (grafix.worldProps.canvas.height - 25) / 25;
 
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x270F),          150, 100);
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x270F, 0xFE0F),  150, 150);
-
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x1F4BA),         200, 100);
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x1F4BA, 0xFE0F), 200, 150);
-
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x260E),         250, 100);
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x260E, 0xFE0F), 250, 150);
-
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x26F2),         300, 100);
-    grafix.worldProps.ctx.fillText(String.fromCodePoint(0x26F2, 0xFE0F), 300, 150);
+    let index = 0;
+    for (let i = 0; i < rows; i += 1) {
+        for (let j = 0; j < cols; j += 1) {
+            if (index < emoji.emojiTable.length) {
+                grafix.worldProps.ctx.fillText(String.fromCodePoint(emoji.emojiTable[index].codePoint,0xFE0F), (j * 25) + (margin), (i * 25) + 25);
+            }
+            index += 1;
+        }
+    }
 
     game.requestID = requestAnimationFrame(draw);
 }
