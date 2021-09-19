@@ -41,16 +41,16 @@ function draw(timeStamp) {
     const centerX = gw.canvas.width/2;
     const centerY = gw.canvas.height/2;
     const radius = (Math.min(gw.canvas.width, gw.canvas.height) / 2) - margin;
-    const clockPositionAngle = 2.0/colorWheel.length;
+    const clockHourAngle = 2.0/colorWheel.length;
     const animationincrement = 0.0025;
     const fontSize = 40;
 
     colorWheel.forEach( element => {
 
-        const angle = (clockPositionAngle * element.clockPosition);
+        const angle = (clockHourAngle * element.clockPosition);
     
         const startAngle = angle * Math.PI;
-        const endAngle = (angle + clockPositionAngle) * Math.PI;
+        const endAngle = (angle + clockHourAngle) * Math.PI;
     
         gw.ctx.beginPath();    
         gw.ctx.arc(centerX, centerY, radius, startAngle,  endAngle);
