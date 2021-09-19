@@ -24,12 +24,12 @@ const colorWheel = [
     { colorName: 'mediumvioletred', clockPosition: 11 },
 ];
 
-function calcX(centerX, fontSize, angle) {
+function calcX(centerX, fontSize, angle, radius) {
     const offset = fontSize / 2;
     return (centerX - offset) + (radius * Math.cos(angle));
 }
 
-function calcY(centerY, fontSize, angle) {
+function calcY(centerY, fontSize, angle, radius) {
     const offset = fontSize / 2;
     return (centerY + offset) + (radius * Math.sin(angle));
 }
@@ -62,8 +62,8 @@ function draw(timeStamp) {
         const limit = 1;
 
         for (let i = 0; i < limit; i += 1) {
-            const x = calcX(centerX, fontSize, startAngle);
-            const y = calcY(centerY, fontSize, startAngle);
+            const x = calcX(centerX, fontSize, startAngle, radius);
+            const y = calcY(centerY, fontSize, startAngle, radius);
             gw.ctx.fillText('🤖', x, y);    
         }
 
