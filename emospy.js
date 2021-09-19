@@ -24,6 +24,16 @@ const colorWheel = [
     { colorName: 'mediumvioletred', clockPosition: 11 },
 ];
 
+function calcX(centerX, fontSize, angle) {
+    const offset = fontSize / 2;
+    return (centerX - offset) + (radius * Math.cos(angle));
+}
+
+function calcY(centerY, fontSize, angle) {
+    const offset = fontSize / 2;
+    return (centerY + offset) + (radius * Math.sin(angle));
+}
+
 function draw(timeStamp) {
     gw.ctx.clearRect(0, 0, gw.canvas.width, gw.canvas.height);
 
@@ -32,9 +42,8 @@ function draw(timeStamp) {
     const centerY = gw.canvas.height/2;
     const radius = (Math.min(gw.canvas.width, gw.canvas.height) / 2) - margin;
     const clockPositionAngle = 2.0/colorWheel.length;
-    const increment = 0.0025;
+    const animationincrement = 0.0025;
     const fontSize = 40;
-    const offset = fontSize / 2;
 
     colorWheel.forEach( element => {
 
@@ -49,11 +58,16 @@ function draw(timeStamp) {
         gw.ctx.lineWidth = 10;
         gw.ctx.stroke();
         gw.ctx.font = `${fontSize}px Arial`;
-        const x = (centerX - offset) + (radius * Math.cos(startAngle));
-        const y = (centerY + offset) + (radius * Math.sin(startAngle));
-        gw.ctx.fillText('🤖', x, y);
 
-        element.clockPosition += increment;
+        const limit = 1;
+
+        for (let i = 0; i < limit; i += 1) {
+            const x = calcX(centerX, fontSize, startAngle);
+            const y = calcY(centerY, fontSize, startAngle);
+            gw.ctx.fillText('🤖', x, y);    
+        }
+
+        element.clockPosition += animationincrement;
     });
     
     gw.requestID = requestAnimationFrame(draw);
