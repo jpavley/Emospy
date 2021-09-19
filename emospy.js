@@ -25,18 +25,18 @@ const colorWheel = [
 ];
 
 const emojiList = [
-    '🍇',
+    '🍠',
     '🍎', 
-    '🍊', 
     '🍑', 
+    '🍊',
     '🍋', 
-    '🥬', 
     '🍏', 
-    '🫐', 
+    '🥬', 
     '💧', 
     '🧊', 
+    '🫐',
     '🍆', 
-    '🍠',
+    '🍇',
 ]
 
 function calcX(centerX, fontSize, angle, radius) {
@@ -49,38 +49,11 @@ function calcY(centerY, fontSize, angle, radius) {
     return (centerY + offset) + (radius * Math.sin(angle));
 }
 
-function drawEmojiRing(radius, fontSize) {
-    const minuets = 60;
-    const clockMinuetAngle = 2.0/minuets;
-    const centerX = gw.canvas.width/2;
-    const centerY = gw.canvas.height/2;
-
-    for (let i = 0; i < minuets; i += 1) {
-        const angle = (clockMinuetAngle * i);
-        const startAngle = angle * Math.PI;
-
-        gw.ctx.beginPath();    
-        gw.ctx.font = `${fontSize}px Arial`;
-        const x = calcX(centerX, fontSize, startAngle, radius);
-        const y = calcY(centerY, fontSize, startAngle, radius);
-        let index = Math.floor(i / 5);
-        gw.ctx.fillText(emojiList[index], x, y);
-    }
-}
-
-function draw(timeStamp) {
-    gw.ctx.clearRect(0, 0, gw.canvas.width, gw.canvas.height);
-
+function drawColorWheel(radius) {
     const hours = 12;
-    const minuets = 60;
-    const margin = 50;
     const centerX = gw.canvas.width/2;
     const centerY = gw.canvas.height/2;
-    const radius = (Math.min(gw.canvas.width, gw.canvas.height) / 2) - margin;
     const clockHourAngle = 2.0/hours;
-    const clockMinuetAngle = 2.0/minuets;
-    const animationincrement = 0.0025;
-    const fontSize = 30;
 
     colorWheel.forEach( element => {
 
@@ -94,16 +67,46 @@ function draw(timeStamp) {
         gw.ctx.strokeStyle = element.colorName;
         gw.ctx.lineWidth = 10;
         gw.ctx.stroke();
-
-        //element.clockPosition += animationincrement;
     });
+}
 
-    drawEmojiRing(radius - 20, fontSize);
-    drawEmojiRing(radius - 50, fontSize * 0.9);
-    drawEmojiRing(radius - 80, fontSize * 0.7);
-    drawEmojiRing(radius - 110, fontSize * 0.5);
-    drawEmojiRing(radius - 130, fontSize * 0.3);
+function drawEmojiRing(radius, fontSize) {
+    const minuets = 60;
+    const clockMinuetAngle = 2.0/minuets;
+    const centerX = gw.canvas.width/2;
+    const centerY = gw.canvas.height/2;
 
+    for (let i = 0; i < minuets; i += 1) {
+        const angle = (clockMinuetAngle * i);
+        const startAngle = (angle + 0.015) * Math.PI;
+
+        gw.ctx.beginPath();    
+        gw.ctx.font = `${fontSize}px Arial`;
+        const x = calcX(centerX, fontSize, startAngle, radius);
+        const y = calcY(centerY, fontSize, startAngle, radius);
+        let index = Math.floor(i / 5);
+        gw.ctx.fillText(emojiList[index], x, y);
+    }
+}
+
+function draw(timeStamp) {
+    gw.ctx.clearRect(0, 0, gw.canvas.width, gw.canvas.height);
+    const centerX = gw.canvas.width/2;
+    const centerY = gw.canvas.height/2;
+
+    const margin = 50;
+    const radius = (Math.min(gw.canvas.width, gw.canvas.height) / 2) - margin;
+    const fontSizeRatio = 10;
+    const fontSize = radius/fontSizeRatio;
+
+    drawColorWheel(radius - 94);
+
+    drawEmojiRing(radius, fontSize);
+    drawEmojiRing(radius - 20, fontSize * 0.9);
+    drawEmojiRing(radius - 40, fontSize * 0.7);
+    drawEmojiRing(radius - 58, fontSize * 0.5);
+    drawEmojiRing(radius - 70, fontSize * 0.4);
+    drawEmojiRing(radius - 78, fontSize * 0.3);
 
     gw.requestID = requestAnimationFrame(draw);
 }
