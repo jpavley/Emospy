@@ -25,16 +25,16 @@ const colorWheel = [
 ];
 
 const emojiList = [
-    '🍠',
-    '🍎', 
+    '🍎',
     '🍑', 
     '🍊',
+    '🥐', 
     '🍋', 
     '🍏', 
-    '🥬', 
-    '💧', 
-    '🧊', 
+    '🥬',
+    '🪣', 
     '🫐',
+    '💜', 
     '🍆', 
     '🍇',
 ]
@@ -70,14 +70,23 @@ function drawColorWheel(radius) {
     });
 }
 
-function drawEmojiRing(radius, fontSize) {
+const animationIncrement = 0.0005;
+let rotationAmount = 0.0
+
+function drawEmojiRing(radius, fontSize, rotateClockwise) {
     const minuets = 60;
     const clockMinuetAngle = 2.0/minuets;
     const centerX = gw.canvas.width/2;
     const centerY = gw.canvas.height/2;
 
     for (let i = 0; i < minuets; i += 1) {
-        const angle = (clockMinuetAngle * i);
+
+        let localRotationAmount = rotationAmount;
+        if (!rotateClockwise) {
+            localRotationAmount = -(rotationAmount);
+        }
+
+        const angle = (clockMinuetAngle * i) + localRotationAmount;
         const startAngle = (angle + 0.015) * Math.PI;
 
         gw.ctx.beginPath();    
@@ -99,14 +108,38 @@ function draw(timeStamp) {
     const fontSizeRatio = 10;
     const fontSize = radius/fontSizeRatio;
 
-    drawColorWheel(radius - 94);
+    //drawColorWheel(radius - 94);
 
-    drawEmojiRing(radius, fontSize);
-    drawEmojiRing(radius - 20, fontSize * 0.9);
-    drawEmojiRing(radius - 40, fontSize * 0.7);
-    drawEmojiRing(radius - 58, fontSize * 0.5);
-    drawEmojiRing(radius - 70, fontSize * 0.4);
-    drawEmojiRing(radius - 78, fontSize * 0.3);
+    drawEmojiRing(radius - 78, fontSize * 0.3, true);
+    drawEmojiRing(radius - 70, fontSize * 0.4, false);
+    drawEmojiRing(radius - 58, fontSize * 0.5, true);
+    drawEmojiRing(radius - 40, fontSize * 0.7, false);
+    drawEmojiRing(radius - 20, fontSize * 0.9, true);
+    drawEmojiRing(radius, fontSize, false);
+
+    const radius2 = radius / 1.3;
+    const fontSize2 = radius2/fontSizeRatio;
+
+    drawEmojiRing(radius2 - 78, fontSize2 * 0.3, true);
+    drawEmojiRing(radius2 - 70, fontSize2 * 0.4, false);
+    drawEmojiRing(radius2 - 58, fontSize2 * 0.5, true);
+    drawEmojiRing(radius2 - 40, fontSize2 * 0.7, false);
+    drawEmojiRing(radius2 - 20, fontSize2 * 0.9, true);
+    drawEmojiRing(radius2, fontSize2, false);
+
+    const radius3 = radius2 / 1.4;
+    const fontSize3 = radius3/fontSizeRatio;
+
+    drawEmojiRing(radius3 - 78, fontSize3 * 0.3, true);
+    drawEmojiRing(radius3 - 70, fontSize3 * 0.4, false);
+    drawEmojiRing(radius3 - 58, fontSize3 * 0.5, true);
+    drawEmojiRing(radius3 - 40, fontSize3 * 0.7, false);
+    drawEmojiRing(radius3 - 20, fontSize3 * 0.9, true);
+    drawEmojiRing(radius3, fontSize3, false);
+
+    
+    rotationAmount += animationIncrement;
+
 
     gw.requestID = requestAnimationFrame(draw);
 }
